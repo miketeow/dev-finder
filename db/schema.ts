@@ -75,6 +75,9 @@ export const room = pgTable("room", {
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
   name: text("name").notNull(),
+  description: text("description").notNull(),
   language: text("language").notNull(),
   githubRepo: text("githubRepo"),
 });
+
+export type Room = typeof room.$inferSelect;

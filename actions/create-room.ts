@@ -4,6 +4,7 @@ import { currentUser } from "@/data/auth";
 import { db } from "@/db";
 import { room } from "@/db/schema";
 import { formSchema } from "@/schema";
+import { revalidatePath } from "next/cache";
 
 import * as z from "zod";
 
@@ -16,4 +17,6 @@ export const createRoomAction = async (
   }
 
   await db.insert(room).values({ ...roomData, userId: user.id });
+
+  revalidatePath("/");
 };
