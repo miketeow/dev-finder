@@ -6,3 +6,7 @@ export const formSchema = z.object({
   githubRepo: z.string().min(1).max(50),
   language: z.string().min(1).max(50),
 });
+
+export const searchSchema = z.object({
+  search: z.string().max(20),
+});

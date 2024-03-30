@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import {
   Call,
   CallControls,
+  CallParticipantListing,
   SpeakerLayout,
   StreamCall,
   StreamTheme,
@@ -14,6 +15,7 @@ import "@stream-io/video-react-sdk/dist/css/styles.css";
 import { useSession } from "next-auth/react";
 import { Room } from "@/db/schema";
 import { generateTokenAction } from "@/actions/token";
+import { useRouter } from "next/navigation";
 
 const apiKey = process.env.NEXT_PUBLIC_GET_STREAM_API_KEY!;
 
@@ -21,6 +23,7 @@ const DevFinder = ({ room }: { room: Room }) => {
   const session = useSession();
   const [client, setClient] = useState<StreamVideoClient | null>(null);
   const [call, setCall] = useState<Call | null>(null);
+  const router = useRouter();
   useEffect(() => {
     if (!room) return;
     if (!session.data) {
@@ -40,8 +43,12 @@ const DevFinder = ({ room }: { room: Room }) => {
     setCall(call);
 
     return () => {
-      call.leave();
-      client.disconnectUser();
+      call
+        .leave()
+        .then(() => {
+          client.disconnectUser();
+        })
+        .catch(console.error);
     };
   }, [session, room]);
   return (
@@ -51,7 +58,7 @@ const DevFinder = ({ room }: { room: Room }) => {
         <StreamTheme>
           <StreamCall call={call}>
             <SpeakerLayout />
-            <CallControls />
+            <CallControls onLeave={() => router.push("/")} />
           </StreamCall>
         </StreamTheme>
       </StreamVideo>

@@ -11,7 +11,7 @@ import { signOut, useSession } from "next-auth/react";
 import { MdLogout } from "react-icons/md";
 import { Button } from "./ui/button";
 
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { Avatar, AvatarImage } from "./ui/avatar";
 
 const AccountDropdown = () => {
   const session = useSession();
@@ -34,7 +34,7 @@ const AccountDropdown = () => {
         <DropdownMenuLabel className="text-center">{name}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem
-          onClick={() => signOut()}
+          onClick={() => signOut({ callbackUrl: "/" })}
           className="gap-2 justify-center items-center"
         >
           <MdLogout />
