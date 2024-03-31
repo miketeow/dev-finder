@@ -12,6 +12,8 @@ import Link from "next/link";
 import React from "react";
 import { FaGithub } from "react-icons/fa";
 import DevFinder from "./video-player";
+import { TagList } from "@/components/tag-list";
+import { splitTags } from "@/lib/utils";
 
 const RoomPage = async (props: { params: { roomId: string } }) => {
   const roomId = props.params.roomId;
@@ -19,7 +21,7 @@ const RoomPage = async (props: { params: { roomId: string } }) => {
   if (!room) {
     return <div>No room of this ID found</div>;
   }
-  const language = room.language.split(",").map((lang) => lang.trim());
+  const tag = splitTags(room.tags);
   return (
     <div className="grid grid-cols-4 min-h-screen">
       <div className="col-span-3 p-4">
@@ -36,13 +38,7 @@ const RoomPage = async (props: { params: { roomId: string } }) => {
             <CardDescription>{room?.description}</CardDescription>
           </CardHeader>
           <CardContent className="text-2xl items-start justify-center p-4 gap-4 flex flex-col">
-            <div className="flex flex-wrap gap-2">
-              {language.map((lang) => (
-                <Badge key={lang} className="w-fit">
-                  {lang}
-                </Badge>
-              ))}
-            </div>
+            <TagList tags={tag} />
             {room.githubRepo && (
               <Button asChild variant="link">
                 <Link

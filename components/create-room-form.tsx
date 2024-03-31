@@ -26,7 +26,7 @@ const CreateRoomForm = () => {
       name: "",
       description: "",
       githubRepo: "",
-      language: "",
+      tags: "",
     },
   });
 
@@ -84,15 +84,15 @@ const CreateRoomForm = () => {
         />
         <FormField
           control={form.control}
-          name="language"
+          name="tags"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Programming Language</FormLabel>
+              <FormLabel>Keyword Tags</FormLabel>
               <FormControl>
                 <Input placeholder="react, typescript" {...field} />
               </FormControl>
               <FormDescription>
-                Please list your primary programming language
+                Please list all revelant keywords
               </FormDescription>
               <FormMessage />
             </FormItem>

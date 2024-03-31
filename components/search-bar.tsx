@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -32,6 +32,11 @@ const SearchBar = () => {
       router.push("/");
     }
   }
+
+  const search = query.get("search");
+  useEffect(() => {
+    form.setValue("search", search || "");
+  }, [search, form]);
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="flex ">

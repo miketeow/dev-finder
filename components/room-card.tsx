@@ -11,14 +11,19 @@ import { Room } from "@/db/schema";
 import Link from "next/link";
 import { FaGithub } from "react-icons/fa";
 import { Button } from "./ui/button";
+import { TagList } from "./tag-list";
+import { splitTags } from "@/lib/utils";
+
 const RoomCard = ({ room }: { room: Room }) => {
+  const tag = splitTags(room.tags);
   return (
     <Card>
       <CardHeader>
         <CardTitle>{room.name}</CardTitle>
         <CardDescription>{room.name}</CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex flex-col gap-4">
+        <TagList tags={tag} />
         {room.githubRepo && (
           <Link
             href={room.githubRepo}
